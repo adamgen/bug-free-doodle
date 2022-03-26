@@ -1,17 +1,39 @@
 import db from "./config/sequelize";
 import express from "express";
-import userRouter from "./routes/user.route";
+import adminRouter from "./routes/user.route";
+import authRouter from "./routes/auth.route";
 import morgan from "morgan";
-const app = express();
-app.use(morgan("dev"));
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+import * as dotenv from "dotenv";
+import session from "cookie-session";
+import cookieParser from "cookie-parser";
 
-app.use("", userRouter);
+//FIXME
+declare var process: {
+  env: any;
+};
 
 db.sync().then(() => {
   console.log("connect to db");
 });
+
+const app = express();
+
+app.use(cookieParser());
+app.use(
+  session({
+    keys: [process.env.ACCESS_TOKEN_SECRET, process.env.REFRESH_TOKEN_SECRET],
+    httpOnly: false,
+    secure: false,
+    maxAge: 30000,
+  })
+);
+
+app.use(morgan("dev"));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+app.use("/auth", authRouter);
+app.use("/", adminRouter);
 
 const port = 9000;
 

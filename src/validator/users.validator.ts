@@ -1,5 +1,6 @@
 import { check, body, validationResult } from "express-validator";
 import { Request, Response, NextFunction } from "express";
+import { User } from "../model/User";
 
 const createUser = [
   body("email").isEmail().withMessage("Email must be valid"),
@@ -10,7 +11,12 @@ const createUser = [
     .withMessage(
       "Password must be between 6 and 20 characters, at least one uppercase letter, one lowercase letter and one number "
     ),
-  (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { email } = req.body;
+    const user: User | null = await User.findOne({ where: { email: email } });
+    if (user) {
+      return res.status(400).send({ message: "User already exists" });
+    }
     const errors = validationResult(req);
     if (!errors.isEmpty())
       return res.status(422).json({ errors: errors.array() });

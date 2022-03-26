@@ -1,3 +1,6 @@
+// https://testingjavascript.com/courses/static-analysis-testing-javascript-applications-71c1
+// https://github.com/kentcdodds/static-testing-tools
+
 //###BABEL###///
 //npm install -D @babel/core @babel/cli @babel/preset-env
 
@@ -11,6 +14,8 @@
 // npm init @eslint/config
 
 //  npm install -D @typescript-eslint/eslint-plugin@latest @typescript-eslint/parser eslint-config-prettier
+
+// optinaol for more optinos
 // npm install -D lint-staged npm-run-all
 
 //###to check ###//

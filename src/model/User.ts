@@ -1,5 +1,6 @@
 import { DataTypes, Model, UUIDV4 } from "sequelize";
 import sequelize from "../config/sequelize";
+import bcrypt from "bcrypt";
 
 interface UserAttributes {
   id: string;
@@ -7,7 +8,21 @@ interface UserAttributes {
   password: string;
 }
 
-export class User extends Model<UserAttributes> {}
+export class User extends Model<UserAttributes> {
+  public static async generateHash(password: string): Promise<string> {
+    return await bcrypt.hash(password, bcrypt.genSaltSync(5));
+  }
+  public id!: number;
+  public email!: string;
+  public password!: string;
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+
+  public async verifyPassword(password: string): Promise<boolean> {
+    return await bcrypt.compare(password, this.password);
+  }
+}
 
 User.init(
   {
@@ -32,3 +47,21 @@ User.init(
     tableName: "users",
   }
 );
+
+User.beforeCreate(async (user, options) => {
+  const hashedPassword = await User.generateHash(user.password);
+  user.password = hashedPassword;
+});
+//
+User.beforeUpdate(async (user: any) => {
+  const hashedPassword = user.password
+    ? await User.generateHash(user.password)
+    : user.previous("password");
+  user.password = hashedPassword;
+});
+
+//FIXME:   user: any
+// User.beforeUpdate(async (user) => {
+//   const hashedPassword = user.password ? await User.generateHash(user.password) : user.previous("password");
+//   user.password = hashedPassword;
+// });

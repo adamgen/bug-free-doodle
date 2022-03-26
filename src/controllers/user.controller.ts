@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { User } from "../model/User";
 import { v4 as uuidv4 } from "uuid";
-import hashPassword from "../helpers/hashPassword";
+import hashPassword from "../utils/hashPassword";
 
 const getUsers = async (req: Request, res: Response, next: NextFunction) => {
   try {
