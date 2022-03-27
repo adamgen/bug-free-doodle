@@ -1,7 +1,8 @@
 // https://testingjavascript.com/courses/test-node-js-backends
 // https://github.com/kentcdodds/testing-node-apps
 
-// npm install -D jest jest-cli supertest
+// npm install -D jest jest-cli jest-in-case supertest
+// npm i -D ts-jest @types/jest
 
 //interactive shell
 // "scripts": {

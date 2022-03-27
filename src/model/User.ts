@@ -10,7 +10,7 @@ interface UserAttributes {
 
 export class User extends Model<UserAttributes> {
   public static async generateHash(password: string): Promise<string> {
-    return await bcrypt.hash(password, bcrypt.genSaltSync(5));
+    return await bcrypt.hash(password, bcrypt.genSaltSync(12));
   }
   public id!: number;
   public email!: string;

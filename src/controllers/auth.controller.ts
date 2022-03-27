@@ -3,11 +3,10 @@ import { User } from "../model/User";
 import { v4 as uuidv4 } from "uuid";
 import hashPassword from "../utils/hashPassword";
 import { JWTgenerateToken } from "../utils/jwt.utils";
+import request from "supertest";
 
 const register = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    console.log(req.body);
-
     const { email, password } = req.body;
     const id = uuidv4().toString();
     const newUser = await User.create({
@@ -15,11 +14,9 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
       email,
       password: hashPassword(password),
     });
-    const token = JWTgenerateToken(newUser.id.toString(), newUser.email);
+    const accessToken = JWTgenerateToken(newUser.id.toString(), newUser.email);
 
-    return res.status(200).json({
-      token,
-    });
+    res.cookie("ACCESS_TOKEN", accessToken).status(200).json("success");
   } catch (error) {
     console.log(error);
     throw error;
@@ -29,17 +26,16 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
 const login = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { email, password } = req.body;
-    console.log(req.body);
 
     const user: User | null = await User.findOne({ where: { email: email } });
 
     if (user != null && user.verifyPassword(password)) {
       const accessToken = JWTgenerateToken(user.id.toString(), user.email);
 
-      res.cookie("ACCESS_TOKEN", accessToken).status(200).json("success");
-
       // for test
       // res.cookie("ACCESS_TOKEN", accessToken).status(200).json(accessToken);
+
+      res.cookie("ACCESS_TOKEN", accessToken).status(200).json("success");
     }
   } catch (error) {
     console.log(error);

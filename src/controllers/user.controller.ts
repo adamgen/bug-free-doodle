@@ -6,7 +6,6 @@ import hashPassword from "../utils/hashPassword";
 const getUsers = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const users = await User.findAll();
-    console.log(users);
 
     // get some Users
     return res.status(200).json({
