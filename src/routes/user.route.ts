@@ -1,7 +1,7 @@
 /** source/routes/Users.ts */
 import express from "express";
 import usersController from "../controllers/user.controller";
-import usersValidator from "../validator/users.validator";
+import usersValidator from "../middleware/validator/users.validator";
 const router = express.Router();
 
 router.post("/users", usersValidator.createUser, usersController.addUser);

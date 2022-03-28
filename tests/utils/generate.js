@@ -17,7 +17,8 @@ function getUserToken({ id, email }) {
   return JWTgenerateToken(id.toString(), email);
 }
 
-const getPassword = (...args) => `F__${faker.internet.password(...args)}`;
+const getPassword = (...args) =>
+  `Fa0${faker.internet.password(16, false, /[0-9A-Za-z]/)}`;
 const getEmail = faker.internet.email;
 const getId = faker.datatype.uuid;
 const getSynopsis = faker.lorem.paragraph;

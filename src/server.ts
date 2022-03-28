@@ -7,44 +7,42 @@ import "dotenv/config";
 import session from "cookie-session";
 import cookieParser from "cookie-parser";
 
+import Debug from "debug";
+const debug = Debug("MyApp");
+
 //FIXME
-declare var process: {
-  env: any;
-};
-let server: any;
-async function startServer({ port = process.env.PORT } = {}) {
-  await db.sync().then(() => {
-    console.log("connect to db");
-  });
+// declare let process: {
+//   env: any;
+// };
 
-  const app = express();
+db.sync().then(() => {
+  // console.log("connect to db");
+});
 
-  app.use(cookieParser());
-  app.use(
-    session({
-      keys: [process.env.ACCESS_TOKEN_SECRET, process.env.REFRESH_TOKEN_SECRET],
-      httpOnly: false,
-      secure: false,
-      maxAge: 30000,
-    })
-  );
+const app = express();
 
-  app.use(morgan("dev"));
-  app.use(express.urlencoded({ extended: true }));
-  app.use(express.json());
+app.use(cookieParser());
+app.use(
+  session({
+    keys: [
+      process.env.ACCESS_TOKEN_SECRET as string,
+      process.env.REFRESH_TOKEN_SECRET as string,
+    ],
+    httpOnly: false,
+    secure: false,
+    maxAge: 300000,
+  })
+);
 
-  app.use("/auth", authRouter);
-  app.use("/", adminRouter);
+app.use(morgan("dev"));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-  server = app.listen(port, () => {
-    console.log("server is running on port " + port);
-  });
+app.use("/auth", authRouter);
+app.use("/", adminRouter);
 
-  return app;
-}
+//  app.listen(port, () => {
+//     console.log("server is running on port " + port);
+//   });
 
-async function close() {
-  server.close();
-}
-
-export default startServer;
+export default app;

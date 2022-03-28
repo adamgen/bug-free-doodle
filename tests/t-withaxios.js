@@ -10,15 +10,15 @@ import {
   resolve,
 } from "./utils/async";
 import * as usersDB from "../src/model/User";
-import startServer from "../src/server";
+import server from "../src/server";
+import index from "../src/index";
 import cookieParser from "cookie-parser";
 
 // import { User } from "../model/User";
 
-let api, server;
+let api;
 
 beforeAll(async () => {
-  server = await startServer();
   server.use(cookieParser);
   const baseURL = `http://localhost:${process.env.PORT}/`;
   api = axios.create({ baseURL });

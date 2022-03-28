@@ -20,7 +20,7 @@ export class User extends Model<UserAttributes> {
   public readonly updatedAt!: Date;
 
   public async verifyPassword(password: string): Promise<boolean> {
-    return await bcrypt.compare(password, this.password);
+    return await bcrypt.compareSync(password, this.password);
   }
 }
 
