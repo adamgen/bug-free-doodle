@@ -1,13 +1,13 @@
 //  https://www.becomebetterprogrammer.com/jwt-authentication-middleware-nodejs-typescript/
 
-// yarn add jsonwebtoken
+// yarn add jsonwebtoken          //jwt.sign , jwt.verify,
 // yarn add -D @types/jsonwebtoken
 
 // yarn add cookie-session cookie-parser
 // yarn add -D @types/cookie-parser @types/cookie-session
 
-// const session = require('cookie-session')
-// const cookieParser = require("cookie-parser");
+// const session = require('cookie-session')       // good for config the cookie // use req.session
+// const cookieParser = require("cookie-parser"); // use req.cookies
 // db()
 
 // const app = express();
