@@ -36,21 +36,21 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
 const login = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { email, password } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
 
     const user: User | null = await User.findOne({ where: { email: email } });
 
     if (user != null && (await user.verifyPassword(password))) {
       const accessToken = JWTgenerateToken(user.id.toString(), user.email);
-      const payload = jwt.verify(accessToken, "Secret");
-
+      const payload: any = jwt.verify(accessToken, "Secret");
+      payload["accessToken"] = accessToken;
       // for test
       // res.cookie("ACCESS_TOKEN", accessToken).status(200).json(accessToken);
 
       // req.session = {
       //   jwt: accessToken,
       // };
-      console.log({ user: payload || null });
+      // console.log({ user: payload || null });
 
       res
         .cookie("ACCESS_TOKEN", accessToken)
@@ -67,14 +67,44 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const currentuser = async (req: any, res: Response, next: NextFunction) => {
+// const currentToken = async (req: any, res: Response, next: NextFunction) => {
+//   // if (!req.session?.jwt) {
+//   //   return next();
+//   // }
+
+//   try {
+//     console.log(req.cookies);
+//     const payload = jwt.verify(req.cookies["ACCESS_TOKEN"], "Secret");
+//     req.currentUser = payload;
+//     // console.log(req.currentUser);
+//     res.send({ user: req.currentUser || null });
+
+//     // res
+//     // .cookie("ACCESS_TOKEN", accessToken)
+//     // .status(200)
+//     // .json({ user: payload || null });
+//   } catch (err: any) {
+//     if (err.message.trim() === "invalid signature".trim()) {
+//       return res.status(400).json({ message: "invalid signature" });
+//     }
+//     console.log(err);
+//     return res.status(500).json({ message: "some problem" });
+//     throw err;
+//   }
+// };
+
+const currentUser = async (req: any, res: Response, next: NextFunction) => {
   // if (!req.session?.jwt) {
   //   return next();
   // }
 
   try {
-    // console.log(req.cookies);
-    const payload = jwt.verify(req.cookies["ACCESS_TOKEN"], "Secret");
+    // console.log(
+    //   "ttt############################################",
+    //   req.body,
+    //   req.cookies
+    // );
+    const payload = jwt.verify(req.params.accessToken, "Secret");
     req.currentUser = payload;
     // console.log(req.currentUser);
     res.send({ user: req.currentUser || null });
@@ -141,7 +171,11 @@ export default {
   login,
   logout,
   removeUser,
-  currentuser,
+  currentUser,
+  // currentToken,
   register,
   validationToken,
 };
+
+//FIXME
+// const payload = jwt.verify(req.cookies["ACCESS_TOKEN"], "Secret");

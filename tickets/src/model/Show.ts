@@ -1,24 +1,22 @@
 import { DataTypes, Model, UUIDV4 } from "sequelize";
 import sequelize from "../config/sequelize";
 
-interface MovieAttributes {
+interface ShowAttributes {
   id: string;
-  title: string;
-  imdbApiID: string;
-  length: number;
+  dateAndTIme: Date;
+  price: number;
 }
 
-export class Movie extends Model<MovieAttributes> {
+export class Show extends Model<ShowAttributes> {
   public id!: number;
-  public title!: string;
-  public imdbApiID!: string;
-  public length!: number;
+  public dateAndTIme!: Date;
+  public price!: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
 
-Movie.init(
+Show.init(
   {
     id: {
       type: DataTypes.UUID,
@@ -26,22 +24,18 @@ Movie.init(
       allowNull: false,
       primaryKey: true,
     },
-    title: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-    },
-    imdbApiID: {
-      type: DataTypes.STRING,
+    dateAndTIme: {
+      type: DataTypes.DATE,
       allowNull: false,
     },
-    length: {
+
+    price: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
   },
   {
     sequelize: sequelize,
-    tableName: "movie",
+    tableName: "show",
   }
 );

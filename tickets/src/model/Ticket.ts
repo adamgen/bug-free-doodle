@@ -3,20 +3,18 @@ import sequelize from "../config/sequelize";
 
 interface TicketAttributes {
   id: string;
-  movieId: string;
-  availableTickets: number;
-  ticketsLeft: number;
-  dateAndTIme: Date;
-  price: number;
+  showId: string;
+  imdbApiID: string;
+  seatId: number;
+  isTaken: boolean;
 }
 
 export class Ticket extends Model<TicketAttributes> {
   public id!: number;
-  public movieId!: string;
-  public availableTickets!: number;
-  public ticketsLeft!: number;
-  public dateAndTIme!: Date;
+  public showId!: string;
   public price!: number;
+  public seatId!: number;
+  public isTaken!: boolean;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -30,25 +28,22 @@ Ticket.init(
       allowNull: false,
       primaryKey: true,
     },
-    movieId: {
+    showId: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    availableTickets: {
+    imdbApiID: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    seatId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    ticketsLeft: {
-      type: DataTypes.INTEGER,
+    isTaken: {
+      type: DataTypes.BOOLEAN,
       allowNull: false,
-    },
-    dateAndTIme: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    },
-    price: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+      defaultValue: false,
     },
   },
   {

@@ -3,31 +3,30 @@ import { gql } from "apollo-server-express";
 const schema = gql`
   scalar Date
 
-  type Movie {
+  type Order {
     id: ID!
-    title: String!
-    length: Int!
-    imdbApiID: String!
-  }
-
-  type Ticket {
-    id: ID!
-    movieId: String!
-    availableTickets: Int!
-    ticketsLeft: Int!
-    dateAndTIme: Date!
-    price: Int!
+    userId: String!
+    ticketId: String!
+    status: String!
+    expiresAt: Date!
   }
 
   type Mutation {
-    createUser(password: String!, email: String!): User!
-    createUserSession(password: String!, email: String!): UserSession!
-    deleteUserSession(me: Boolean!): Boolean!
+    createOrder(
+      id: ID!
+      userId: String!
+      ticketId: String!
+      status: String!
+      expiresAt: Date!
+    ): User!
   }
 
   type Query {
-    userSession(me: Boolean!): UserSession
+    # ordersForAdmin: [Order!]!
+    orders: [Order!]!
   }
 `;
 
 export default schema;
+
+// ordersByUser(): [Order!]!

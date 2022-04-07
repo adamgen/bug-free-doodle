@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { Movie } from "../model/Movie";
+import { Movie } from "../model/Show";
 import { v4 as uuidv4 } from "uuid";
 
 const getMovies = async (req: Request, res: Response, next: NextFunction) => {

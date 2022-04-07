@@ -2,6 +2,7 @@ import db from "./config/sequelize";
 import express from "express";
 import adminRouter from "./routes/user.route";
 import authRouter from "./routes/auth.route";
+// import cors from "cors";
 import morgan from "morgan";
 import "dotenv/config";
 import session from "cookie-session";
@@ -17,6 +18,13 @@ db.sync().then(() => {
 });
 
 const app = express();
+
+// app.use(
+//   cors({
+//     origin: "http://localhost:7001", //(Whatever your frontend url is)
+//     credentials: true, // <= Accept credentials (cookies) sent by the client
+//   })
+// );
 
 app.use(cookieParser());
 app.use(

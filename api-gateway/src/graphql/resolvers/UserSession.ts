@@ -1,10 +1,13 @@
-import UsersService from "#root/adapters/UsersService";
-import { UserSessionType } from "#root/graphql/types";
+// import UsersService from "#root/adapters/UsersService";
+// import { UserSessionType } from "#root/graphql/types";
 
-const UserSession = {
-  user: async (userSession: UserSessionType) => {
-    return await UsersService.fetchUser({ userId: userSession.userId });
-  },
-};
+// const UserSession = {
+//   user: async (userSession: UserSessionType) => {
+//     // console.log("ttt", userSession.user.accessToken);
+//     return await UsersService.fetchUser({
+//       accessToken: userSession.user.accessToken,
+//     });
+//   },
+// };
 
-export default UserSession;
+// export default UserSession;

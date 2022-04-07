@@ -4,11 +4,13 @@ import { v4 as uuidv4 } from "uuid";
 
 const getOrders = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const users = await Order.findAll();
-
+    const orders = await Order.findAll({
+      where: { userId: req.params.userId },
+    });
+    console.log(orders);
     // get some Orders
     return res.status(200).json({
-      message: users,
+      orders,
     });
   } catch (error) {
     console.log(error);
@@ -18,12 +20,12 @@ const getOrders = async (req: Request, res: Response, next: NextFunction) => {
 
 const getOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const user = await Order.findByPk(req.params.id);
-    console.log(user);
+    const order = await Order.findByPk(req.params.id);
+    console.log(order);
 
     // get some Orders
     return res.status(200).json({
-      message: user,
+      order,
     });
   } catch (error) {
     console.log(error);
@@ -47,7 +49,7 @@ const addOrder = async (req: Request, res: Response, next: NextFunction) => {
     });
 
     return res.status(200).json({
-      message: newOrder,
+      newOrder,
     });
   } catch (error) {
     console.log(error);

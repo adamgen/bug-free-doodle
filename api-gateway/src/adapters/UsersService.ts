@@ -10,10 +10,12 @@ export interface User {
 }
 
 export interface UserSession {
-  createdAt: string;
-  expiresAt: string;
-  id: string;
-  userId: string;
+  user: {
+    id: string;
+    email: string;
+    iat: number;
+    exp: number;
+  };
 }
 
 export default class UsersService {
@@ -43,7 +45,7 @@ export default class UsersService {
         json: { password, email },
       })
       .json();
-    return body;
+    return <UserSession>body;
   }
 
   static async deleteUserSession({ sessionId }: { sessionId: string }) {
@@ -53,19 +55,32 @@ export default class UsersService {
     return body;
   }
 
-  static async fetchUser({ userId }: { userId: string }): Promise<User | null> {
-    const body = await got.get(`${USERS_SERVICE_URI}/users/${userId}`).json();
+  static async fetchUser({
+    accessToken,
+  }: {
+    accessToken: string;
+  }): Promise<User | null> {
+    const body: any = await got
+      .get(`${USERS_SERVICE_URI}/auth/currentuser`, {
+        headers: {
+          Cookie: `ACCESS_TOKEN=${accessToken};`,
+        },
+      })
+      .json();
     if (!body) return null;
-    return <User>body;
+    return <User>body.user;
   }
 
   static async fetchUserSession({
-    sessionId,
+    accessToken,
   }: {
-    sessionId: string;
+    accessToken: string;
   }): Promise<UserSession | null> {
+    //{withCredentials:true}
+    // console.log("ttt", accessToken);
+
     const body = await got
-      .get(`${USERS_SERVICE_URI}/sessions/${sessionId}`)
+      .get(`${USERS_SERVICE_URI}/auth/currentuser/${accessToken}`)
       .json()
       .catch((err) => {
         if (err.response.statusCode === 404) return null;
@@ -75,3 +90,29 @@ export default class UsersService {
     return <UserSession>body;
   }
 }
+
+// static async fetchUserSession({
+//   sessionId,
+// }: {
+//   sessionId: string;
+// }): Promise<UserSession | null> {   //{withCredentials:true}
+//   // console.log("ttt", sessionId);
+
+//   const body = await got
+//     .get(`${USERS_SERVICE_URI}/auth/currentuser/${sessionId}`, {
+//       headers: {
+//         Cookie: `ACCESS_TOKEN=${sessionId};`,
+//       },
+//     })
+//     .json()
+//     .catch((err) => {
+//       if (err.response.statusCode === 404) return null;
+//       throw err;
+//     });
+//   if (!body) return null;
+//   return <UserSession>body;
+// }
+// }
+//FIXME
+//localoht/?bla=galdagan query param
+//.get(`${USERS_SERVICE_URI}/auth/currentuser/${sessionId}`, {  // path/route paramater

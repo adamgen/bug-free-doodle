@@ -7,7 +7,8 @@ const router = express.Router();
 
 router.post("/register", usersValidator.createUser, usersController.register);
 router.post("/login", usersValidator.loginUser, usersController.login);
-router.get("/currentuser", usersController.currentuser);
+router.get("/currentuser/:accessToken", usersController.currentUser);
+// router.get("/currentToken", usersController.currentToken);
 router.delete("/logout", logoutMiddleware.logout, usersController.logout);
 router.delete("/users/:userId", usersController.removeUser);
 router.put("/users/:userId", usersController.validationToken);
