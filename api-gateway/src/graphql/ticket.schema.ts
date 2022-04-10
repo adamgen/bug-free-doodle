@@ -6,9 +6,14 @@ const schema = gql`
   type Ticket {
     id: ID!
     showId: String!
-    imdbApiID: String!
+    imdbApiId: String!
     seatId: Int!
     isTaken: Boolean!
+  }
+
+  input TicketsInit {
+    ticketAmount: Int!
+    imdbApiId: String!
   }
 
   type Show {
@@ -18,19 +23,20 @@ const schema = gql`
   }
 
   type Mutation {
-    createTicket(
+    setTicket(
       showId: String!
-      imdbApiID: String!
+      imdbApiId: String!
       seatId: Int!
       isTaken: Boolean!
     ): Ticket!
-    createShow(dateAndTIme: Date!, price: Int!): Show!
+    createShow(dateAndTIme: Date!, price: Int!, ticketsInit: TicketsInit): Show!
+    editShow(dateAndTIme: Date!, price: Int!, ticketsInit: TicketsInit): Show!
   }
 
   type Query {
     Shows: [Show!]!
     Show(showId: ID!): Show
-    Tickets: [Ticket!]!
+    Tickets(showId: ID!): [Ticket!]!
     Ticket(ticketId: ID!): Ticket
   }
 `;
@@ -40,3 +46,15 @@ export default schema;
 //TODO
 // Update/remove movie
 // Update/removec ticket
+// # createTicket(
+//   #   showId: String!
+//   #   imdbApiId: String!
+//   #   seatId: Int!
+//   #   isTaken: Boolean!
+//   # ): Ticket!
+// getAvailableTicket(showId: ID!): Int!
+// isSoldOut(showId: ID!): Boolean!
+//  type TicketsInformation {
+//    availableTickets: Int!
+//   ticketsLeft: Int!
+//  }
