@@ -3,7 +3,7 @@ import ticketType from "./ticket.schema";
 import orderType from "./order.schema";
 
 // const types = [userType, ticketType, orderType];
-const types = [userType, orderType];
+const types = [userType, orderType, ticketType];
 
 export default types;
 

@@ -37,16 +37,14 @@ const addTicket = async (req: Request, res: Response, next: NextFunction) => {
   try {
     console.log(req.body);
 
-    const { movieId, availableTickets, ticketsLeft, dateAndTIme, price } =
-      req.body;
+    const { showId, seatId, isTaken, imdbApiId } = req.body;
     const id = uuidv4();
     const newTicket = await Ticket.create({
       id,
-      movieId,
-      availableTickets,
-      ticketsLeft,
-      dateAndTIme,
-      price,
+      showId,
+      seatId,
+      isTaken,
+      imdbApiId,
     });
 
     return res.status(200).json({

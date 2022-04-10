@@ -23,13 +23,13 @@ const schema = gql`
       imdbApiID: String!
       seatId: Int!
       isTaken: Boolean!
-    ): Movie!
-    createShow(id: ID!, dateAndTIme: Date!, price: Int!): Show!
+    ): Ticket!
+    createShow(dateAndTIme: Date!, price: Int!): Show!
   }
 
   type Query {
-    Shows: [Movie!]!
-    Show(showId: ID!): Movie
+    Shows: [Show!]!
+    Show(showId: ID!): Show
     Tickets: [Ticket!]!
     Ticket(ticketId: ID!): Ticket
   }

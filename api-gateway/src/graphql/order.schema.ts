@@ -9,11 +9,12 @@ const schema = gql`
     ticketId: String!
     status: String!
     expiresAt: Date!
+    user: User!
+    ticket: Ticket!
   }
 
   type Mutation {
     createOrder(
-      id: ID!
       userId: String!
       ticketId: String!
       status: String!

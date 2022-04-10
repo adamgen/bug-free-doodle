@@ -4,7 +4,7 @@ import sequelize from "../config/sequelize";
 interface TicketAttributes {
   id: string;
   showId: string;
-  imdbApiID: string;
+  imdbApiId: string;
   seatId: number;
   isTaken: boolean;
 }
@@ -32,7 +32,7 @@ Ticket.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    imdbApiID: {
+    imdbApiId: {
       type: DataTypes.STRING,
       allowNull: false,
     },
