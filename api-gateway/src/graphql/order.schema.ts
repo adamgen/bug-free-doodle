@@ -7,23 +7,13 @@ const schema = gql`
     id: ID!
     userId: String!
     ticketId: String!
-    status: String!
-    expiresAt: Date!
-    user: User!
-    ticket: Ticket!
   }
 
   type Mutation {
-    createOrder(
-      userId: String!
-      ticketId: String!
-      status: String!
-      expiresAt: Date!
-    ): User!
+    createOrder(ticketId: String!): Order!
   }
 
   type Query {
-    # ordersForAdmin: [Order!]!
     orders: [Order!]!
   }
 `;
@@ -31,3 +21,10 @@ const schema = gql`
 export default schema;
 
 // ordersByUser(): [Order!]!
+// type Order {
+//   id: ID!
+//   userId: String!
+//   ticketId: String!
+//   user: User!
+//   ticket: Ticket!
+// }

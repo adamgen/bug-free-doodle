@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { Order } from "../model/Order";
 import { v4 as uuidv4 } from "uuid";
-
+import axios from "axios";
 const getOrders = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const orders = await Order.findAll({
@@ -36,24 +36,37 @@ const getOrder = async (req: Request, res: Response, next: NextFunction) => {
 // adding a Order
 const addOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    console.log(req.body.title);
-
-    const { userId, ticketId, status, expiresAt } = req.body;
-    const id = uuidv4();
-    const newOrder = await Order.create({
-      id,
-      userId,
-      ticketId,
-      status,
-      expiresAt,
+    const { userId, ticketId } = req.body;
+    const resTicket: any = await axios.post(`http://localhost:7002/ticket`, {
+      id: ticketId,
+      isTaken: true,
     });
 
-    return res.status(200).json({
-      newOrder,
-    });
+    console.log(resTicket.data);
+
+    const { error, message } = resTicket.data;
+    if (error) {
+      return res.status(200).json({
+        error,
+        message,
+      });
+    } else {
+      const id = uuidv4();
+      const order = await Order.create({
+        id,
+        userId,
+        ticketId,
+      });
+      return res.status(200).json({
+        order,
+      });
+    }
   } catch (error) {
     console.log(error);
-    throw error;
+    return res.status(200).json({
+      error,
+    });
+    // throw error;
   }
 
   // return response

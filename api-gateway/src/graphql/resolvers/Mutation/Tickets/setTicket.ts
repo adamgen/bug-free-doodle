@@ -1,17 +1,15 @@
 import TicketService from "#root/adapters/TicketsService";
 
 interface Args {
-  showId: string;
-  imdbApiId: string;
-  seatId: number;
+  id: string;
   isTaken: boolean;
 }
 
-const createUserResolver = async (
-  obj: any,
-  { showId, imdbApiId, seatId, isTaken }: Args
-) => {
-  return await TicketService.setTicket({ showId, imdbApiId, seatId, isTaken });
+const createUserResolver = async (obj: any, { id, isTaken }: Args) => {
+  return await TicketService.setTicket({
+    id,
+    isTaken,
+  });
 };
 
 export default createUserResolver;

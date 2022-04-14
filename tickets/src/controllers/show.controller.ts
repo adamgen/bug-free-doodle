@@ -4,11 +4,11 @@ import { v4 as uuidv4 } from "uuid";
 
 const getShows = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const users = await Show.findAll();
+    const shows = await Show.findAll();
 
     // get some Shows
     return res.status(200).json({
-      message: users,
+      message: shows,
     });
   } catch (error) {
     console.log(error);
@@ -18,12 +18,12 @@ const getShows = async (req: Request, res: Response, next: NextFunction) => {
 
 const getShow = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const user = await Show.findByPk(req.params.id);
-    console.log(user);
+    const show = await Show.findByPk(req.params.id);
+    console.log(show);
 
     // get some Shows
     return res.status(200).json({
-      message: user,
+      message: show,
     });
   } catch (error) {
     console.log(error);
@@ -34,18 +34,21 @@ const getShow = async (req: Request, res: Response, next: NextFunction) => {
 // adding a Show
 const addShow = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    console.log(req.body.title);
+    // console.log(req.body.title);
 
-    const { dateAndTIme, price } = req.body;
+    const { dateAndTIme, price, ticketsInit } = req.body;
+    // console.log(req.body);
+
     const id = uuidv4();
-    const newShow = await Show.create({
+    const show = await Show.create({
       id,
       dateAndTIme,
       price,
     });
-
+    const showId: any = id;
+    await show.initTickets(ticketsInit, showId);
     return res.status(200).json({
-      message: newShow,
+      show,
     });
   } catch (error) {
     console.log(error);

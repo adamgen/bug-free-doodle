@@ -112,9 +112,13 @@ const currentUser = async (req: any, res: Response, next: NextFunction) => {
     if (err.message.trim() === "invalid signature".trim()) {
       return res.status(400).json({ message: "invalid signature" });
     }
-    console.log(err);
-    return res.status(500).json({ message: "some problem" });
+    console.log("er", err);
+    return res.status(200).json({ message: "some problem" });
     throw err;
+    //FIXME
+    // console.log("er", err);
+    // return res.status(500).json({ message: "some problem" });
+    // // throw err;
   }
 };
 

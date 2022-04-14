@@ -83,10 +83,12 @@ export default class UsersService {
       .get(`${USERS_SERVICE_URI}/auth/currentuser/${accessToken}`)
       .json()
       .catch((err) => {
+        console.log(err);
         if (err.response.statusCode === 404) return null;
         throw err;
       });
     if (!body) return null;
+
     return <UserSession>body;
   }
 }

@@ -12,7 +12,7 @@ interface TicketAttributes {
 export class Ticket extends Model<TicketAttributes> {
   public id!: number;
   public showId!: string;
-  public price!: number;
+  public imdbApiId!: string;
   public seatId!: number;
   public isTaken!: boolean;
 

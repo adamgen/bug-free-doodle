@@ -7,11 +7,9 @@ export interface Order {
   id: string;
   userId: string;
   ticketId: string;
-  status: string;
-  expiresAt: Date;
 }
 
-export default class UsersService {
+export default class OrdersService {
   static async getOrdersByid({
     userId,
   }: {
@@ -27,24 +25,25 @@ export default class UsersService {
 
     return <Order>orders;
   }
-  //   static async createOrder({
-  //     userId,
-  //     ticketId,
-  //     status,
-  //     expiresAt,
-  //   }: {
-  //     userId: string;
-  //     ticketId: string;
-  //     status: string;
-  //     expiresAt: Date;
-  //   }) {
-  //     const body: any = await got
-  //       .post(`${ORDERS_SERVICE_URI}/order`, {
-  //         json: { userId, ticketId, status, expiresAt },
-  //       })
-  //       .json();
-  //     return body.user;
-  //   }
+  static async createOrder({
+    userId,
+    ticketId,
+  }: {
+    userId: string;
+    ticketId: string;
+  }) {
+    const body: any = await got
+      .post(`${ORDERS_SERVICE_URI}/order`, {
+        json: { userId, ticketId },
+      })
+      .json();
+    console.log(body);
+    if (body.error) {
+      throw new Error(body.order);
+    }
+
+    return body.order;
+  }
   //   static async getOrder({
   //     orderId,
   //   }: {

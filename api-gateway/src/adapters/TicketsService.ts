@@ -44,24 +44,29 @@ export default class TicketsService {
     return body.show;
   }
 
-  static async setTicket({
-    showId,
-    imdbApiId,
-    seatId,
-    isTaken,
-  }: {
-    showId: string;
-    imdbApiId: string;
-    seatId: number;
-    isTaken: boolean;
-  }) {
+  static async setTicket({ id, isTaken }: { id: string; isTaken: boolean }) {
     const body: any = await got
       .post(`${TICKETS_SERVICE_URI}/ticket/`, {
-        json: { showId, imdbApiId, seatId, isTaken },
+        json: { id, isTaken },
       })
       .json();
+    console.log(body);
 
     return body.ticket;
+  }
+
+  static async getTicketsByShowId({
+    showId,
+  }: {
+    showId: string;
+  }): Promise<Ticket | null> {
+    const body: any = await got
+      .get(`${TICKETS_SERVICE_URI}/ticket/${showId}`)
+      .json();
+    if (!body) return null;
+    console.log(body.tickets);
+
+    return <Ticket>body.tickets.rows;
   }
 
   static async getTicket({

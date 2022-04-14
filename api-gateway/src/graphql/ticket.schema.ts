@@ -23,12 +23,7 @@ const schema = gql`
   }
 
   type Mutation {
-    setTicket(
-      showId: String!
-      imdbApiId: String!
-      seatId: Int!
-      isTaken: Boolean!
-    ): Ticket!
+    setTicket(id: ID!, isTaken: Boolean!): Ticket!
     createShow(dateAndTIme: Date!, price: Int!, ticketsInit: TicketsInit): Show!
     editShow(dateAndTIme: Date!, price: Int!, ticketsInit: TicketsInit): Show!
   }
@@ -38,6 +33,8 @@ const schema = gql`
     Show(showId: ID!): Show
     Tickets(showId: ID!): [Ticket!]!
     Ticket(ticketId: ID!): Ticket
+    getAvailableTicket(showId: ID!): Int!
+    isSoldOut(showId: ID!): Boolean!
   }
 `;
 
