@@ -5,12 +5,14 @@ interface OrderAttributes {
   id: string;
   userId: string;
   ticketId: string;
+  status: string;
 }
 
 export class Order extends Model<OrderAttributes> {
   public id!: number;
   public userId!: string;
   public ticketId!: string;
+  public status!: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -29,6 +31,10 @@ Order.init(
       allowNull: false,
     },
     ticketId: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    status: {
       type: DataTypes.STRING,
       allowNull: false,
     },

@@ -14,11 +14,8 @@ interface TicketsInit {
 }
 
 export interface Ticket {
-  ticketsInit: TicketsInit;
   id: string;
-  movieId: string;
-  availableTickets: number;
-  ticketsLeft: number;
+  showId: string;
   dateAndTIme: Date;
   price: number;
 }
@@ -61,7 +58,7 @@ export default class TicketsService {
     showId: string;
   }): Promise<Ticket | null> {
     const body: any = await got
-      .get(`${TICKETS_SERVICE_URI}/ticket/${showId}`)
+      .get(`${TICKETS_SERVICE_URI}/ticket/showId/${showId}`)
       .json();
     if (!body) return null;
     console.log(body.tickets);
@@ -69,15 +66,30 @@ export default class TicketsService {
     return <Ticket>body.tickets.rows;
   }
 
-  static async getTicket({
-    ticketId,
-  }: {
-    ticketId: string;
-  }): Promise<Ticket | null> {
-    const body = await got
-      .get(`${TICKETS_SERVICE_URI}/tickets/${ticketId}`)
+  static async getTicket({ id }: { id: string }): Promise<Ticket | null> {
+    console.log("b", id);
+
+    const body: any = await got
+      .get(`${TICKETS_SERVICE_URI}/ticket/"${id}"`)
       .json();
     if (!body) return null;
-    return <Ticket>body;
+
+    return <Ticket>body.ticket;
+  }
+
+  static async getShows(): Promise<Ticket | null> {
+    const body: any = await got.get(`${TICKETS_SERVICE_URI}/show`).json();
+    if (!body) return null;
+    console.log(body.shows);
+
+    return <Ticket>body.shows;
+  }
+
+  static async getShow({ id }: { id: string }): Promise<Ticket | null> {
+    const body: any = await got.get(`${TICKETS_SERVICE_URI}/show/${id}`).json();
+    if (!body) return null;
+    console.log(body.show);
+
+    return <Ticket>body.show;
   }
 }

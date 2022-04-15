@@ -6,8 +6,8 @@ const router = express.Router();
 
 router.post("/", usersController.setTicket);
 router.get("/", usersController.getTickets);
-router.get("/:showId", usersController.getTicketsByShowId);
-// router.get("/:id", usersController.getTicket);
+router.get("/showid/:showId", usersController.getTicketsByShowId);
+router.get("/:id", usersController.getTicket);
 // router.put("/users/:id", controller.updateTicket);
 // router.delete("/users/:id", controller.deleteTicket);
 

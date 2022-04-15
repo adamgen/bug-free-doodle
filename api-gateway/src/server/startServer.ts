@@ -35,7 +35,7 @@ const startServer = async () => {
     })
   );
 
-  // app.use(injectSession);
+  app.use(injectSession);
 
   await apolloServer.start();
   apolloServer.applyMiddleware({

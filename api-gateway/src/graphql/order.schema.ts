@@ -7,6 +7,8 @@ const schema = gql`
     id: ID!
     userId: String!
     ticketId: String!
+    status: String!
+    ticket: Ticket!
   }
 
   type Mutation {

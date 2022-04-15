@@ -15,13 +15,13 @@ export default class OrdersService {
   }: {
     userId: string;
   }): Promise<Order | null> {
-    console.log("ttt", userId);
+    // console.log("ttt", userId);
 
     const { orders } = await got
       .get(`${ORDERS_SERVICE_URI}/order/${userId}`)
       .json();
     if (!orders) return null;
-    console.log(orders);
+    // console.log(orders);
 
     return <Order>orders;
   }

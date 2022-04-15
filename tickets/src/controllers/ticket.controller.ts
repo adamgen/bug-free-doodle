@@ -26,6 +26,8 @@ const getTicketsByShowId = async (
   next: NextFunction
 ) => {
   try {
+    console.log("tas", req.params);
+
     const { showId } = req.params;
     const tickets = await Ticket.findAndCountAll({
       where: {
@@ -49,11 +51,11 @@ const getTicketsByShowId = async (
 const getTicket = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const ticket = await Ticket.findByPk(req.params.id);
-    console.log(ticket);
+    console.log("tt", ticket);
 
     // get some Tickets
     return res.status(200).json({
-      message: ticket,
+      ticket,
     });
   } catch (error) {
     console.log(error);

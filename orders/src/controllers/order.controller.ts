@@ -52,10 +52,12 @@ const addOrder = async (req: Request, res: Response, next: NextFunction) => {
       });
     } else {
       const id = uuidv4();
+      const status = "active";
       const order = await Order.create({
         id,
         userId,
         ticketId,
+        status,
       });
       return res.status(200).json({
         order,

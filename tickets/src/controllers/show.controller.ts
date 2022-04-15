@@ -8,7 +8,7 @@ const getShows = async (req: Request, res: Response, next: NextFunction) => {
 
     // get some Shows
     return res.status(200).json({
-      message: shows,
+      shows,
     });
   } catch (error) {
     console.log(error);
@@ -23,7 +23,7 @@ const getShow = async (req: Request, res: Response, next: NextFunction) => {
 
     // get some Shows
     return res.status(200).json({
-      message: show,
+      show,
     });
   } catch (error) {
     console.log(error);
