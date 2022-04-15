@@ -36,7 +36,7 @@ const addShow = async (req: Request, res: Response, next: NextFunction) => {
   try {
     // console.log(req.body.title);
 
-    const { dateAndTIme, price, ticketsInit } = req.body;
+    const { dateAndTIme, price, imdbApiId, ticketAmount } = req.body;
     // console.log(req.body);
 
     const id = uuidv4();
@@ -44,9 +44,11 @@ const addShow = async (req: Request, res: Response, next: NextFunction) => {
       id,
       dateAndTIme,
       price,
+      imdbApiId,
+      ticketAmount,
     });
     const showId: any = id;
-    await show.initTickets(ticketsInit, showId);
+    await show.initTickets(ticketAmount, showId);
     return res.status(200).json({
       show,
     });

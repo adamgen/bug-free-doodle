@@ -1,5 +1,7 @@
 //Auth service
 export { default as createUser } from "./Users/createUser";
+export { default as updateUser } from "./Users/updateUser";
+export { default as removeUser } from "./Users/removeUser";
 export { default as createUserSession } from "./Users/createUserSession";
 export { default as deleteUserSession } from "./Users/deleteUserSession";
 //TicketService

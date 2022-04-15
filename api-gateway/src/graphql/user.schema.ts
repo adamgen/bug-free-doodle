@@ -6,6 +6,7 @@ const schema = gql`
   type User {
     id: ID!
     email: String!
+    isAdmin: Boolean!
   }
 
   type UserSession {
@@ -14,6 +15,8 @@ const schema = gql`
 
   type Mutation {
     createUser(email: String!, password: String!): User!
+    updateUser(email: String!, password: String, isAdmin: Boolean!): User!
+    removeUser: String!
     createUserSession(email: String!, password: String!): UserSession!
     deleteUserSession(me: Boolean!): Boolean!
   }

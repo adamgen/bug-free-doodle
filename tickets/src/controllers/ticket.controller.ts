@@ -74,17 +74,20 @@ const setTicket = async (req: Request, res: Response, next: NextFunction) => {
       const ticket: any = await Ticket.findByPk(id, {
         transaction: t,
       });
-      console.log(ticket);
-
-      if (ticket.isTaken) {
+      if (!ticket) {
         error = true;
-        message = "The ticket is taken";
-        return await ticket.save({ transaction: t });
+        message = "ticket not exist";
       } else {
-        ticket.isTaken = true;
-        error = false;
-        message = "The ticket is set";
-        return await ticket.save({ transaction: t });
+        if (ticket.isTaken) {
+          error = true;
+          message = "The ticket is taken";
+          return await ticket.save({ transaction: t });
+        } else {
+          ticket.isTaken = true;
+          error = false;
+          message = "The ticket is set";
+          return await ticket.save({ transaction: t });
+        }
       }
     });
 

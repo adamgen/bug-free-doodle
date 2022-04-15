@@ -10,11 +10,12 @@ import * as path from "path";
 /**
  * generates JWT used for local testing
  */
-export function JWTgenerateToken(id: string, email: string) {
+export function JWTgenerateToken(id: string, email: string, isAdmin: boolean) {
   // information to be encoded in the JWT
   const payload = {
     id,
     email,
+    isAdmin,
   };
 
   const signInOptions: SignOptions = {
@@ -22,7 +23,7 @@ export function JWTgenerateToken(id: string, email: string) {
     // to generate the JWT. The client gets a public key to validate the
     // signature
     algorithm: "HS512",
-    expiresIn: "1h",
+    expiresIn: "1d",
   };
 
   // generate JWT

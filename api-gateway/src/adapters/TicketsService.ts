@@ -6,34 +6,32 @@ const TICKETS_SERVICE_URI = <string>config.get("TICKETS_SERVICE_URI");
 export interface Show {
   dateAndTIme: Date;
   price: number;
-}
-
-interface TicketsInit {
-  ticketAmount: number;
   imdbApiId: string;
+  ticketAmount: number;
 }
 
 export interface Ticket {
   id: string;
   showId: string;
-  dateAndTIme: Date;
-  price: number;
+  isTaken: boolean;
 }
 
 export default class TicketsService {
   static async createShow({
-    ticketsInit,
+    ticketAmount,
     dateAndTIme,
+    imdbApiId,
     price,
   }: {
-    ticketsInit: TicketsInit;
+    ticketAmount: number;
     dateAndTIme: Date;
     price: number;
+    imdbApiId: string;
   }) {
-    console.log("t", dateAndTIme, price, ticketsInit);
+    console.log("t", dateAndTIme, price, ticketAmount);
     const body: any = await got
       .post(`${TICKETS_SERVICE_URI}/show/`, {
-        json: { dateAndTIme, price, ticketsInit },
+        json: { dateAndTIme, price, imdbApiId, ticketAmount },
       })
       .json();
     console.log(body);

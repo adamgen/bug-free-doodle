@@ -6,27 +6,32 @@ const schema = gql`
   type Ticket {
     id: ID!
     showId: String!
-    imdbApiId: String!
     seatId: Int!
     isTaken: Boolean!
-  }
-
-  input TicketsInit {
-    ticketAmount: Int!
-    imdbApiId: String!
   }
 
   type Show {
     id: ID!
     dateAndTIme: Date!
     price: Int!
+    imdbApiId: String!
+    ticketAmount: Int!
   }
 
   type Mutation {
     # setTicket(id: ID!, isTaken: Boolean!): Ticket!
-    createShow(dateAndTIme: Date!, price: Int!, ticketsInit: TicketsInit): Show!
-    editShow(dateAndTIme: Date!, price: Int!, ticketsInit: TicketsInit): Show!
-    editShow(dateAndTIme: Date!, price: Int!, ticketsInit: TicketsInit): Show!
+    createShow(
+      dateAndTIme: Date!
+      price: Int!
+      imdbApiId: String!
+      ticketAmount: Int!
+    ): Show!
+    editShow(
+      dateAndTIme: Date!
+      price: Int!
+      imdbApiId: String!
+      ticketAmount: Int!
+    ): Show!
   }
 
   type Query {

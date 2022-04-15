@@ -44,7 +44,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use("/auth", authRouter);
-app.use("/", adminRouter);
+app.use("/users", adminRouter);
 
 //  app.listen(port, () => {
 //     console.log("server is running on port " + port);

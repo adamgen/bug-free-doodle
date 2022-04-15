@@ -39,7 +39,7 @@ export default class OrdersService {
       .json();
     console.log(body);
     if (body.error) {
-      throw new Error(body.order);
+      throw new Error(body.message);
     }
 
     return body.order;

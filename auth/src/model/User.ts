@@ -6,6 +6,7 @@ interface UserAttributes {
   id: string;
   email: string;
   password: string;
+  isAdmin: boolean;
 }
 
 export class User extends Model<UserAttributes> {
@@ -15,6 +16,7 @@ export class User extends Model<UserAttributes> {
   public id!: number;
   public email!: string;
   public password!: string;
+  public isAdmin!: boolean;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -40,6 +42,11 @@ User.init(
     password: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    isAdmin: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
     },
   },
   {

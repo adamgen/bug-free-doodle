@@ -7,12 +7,14 @@ export interface User {
   createdAt: string;
   id: string;
   email: string;
+  isAdmin: boolean;
 }
 
 export interface UserSession {
   user: {
     id: string;
     email: string;
+    isAdmin: boolean;
     iat: number;
     exp: number;
   };
@@ -29,6 +31,28 @@ export default class UsersService {
     const body: any = await got
       .post(`${USERS_SERVICE_URI}/auth/register`, { json: { password, email } })
       .json();
+    console.log(body);
+
+    return body.user;
+  }
+
+  static async updateUser({
+    userId,
+    password,
+    email,
+    isAdmin,
+  }: {
+    userId: string;
+    password: string;
+    email: string;
+    isAdmin: boolean;
+  }) {
+    const body: any = await got
+      .put(`${USERS_SERVICE_URI}/users/${userId}`, {
+        json: { password, email, isAdmin },
+      })
+      .json();
+    console.log(body);
 
     return body.user;
   }
@@ -55,21 +79,35 @@ export default class UsersService {
     return body;
   }
 
-  static async fetchUser({
-    accessToken,
+  static async removeUser({
+    userId,
   }: {
-    accessToken: string;
+    userId: string;
   }): Promise<User | null> {
+    console.log("aa", userId);
+
     const body: any = await got
-      .get(`${USERS_SERVICE_URI}/auth/currentuser`, {
-        headers: {
-          Cookie: `ACCESS_TOKEN=${accessToken};`,
-        },
-      })
+      .delete(`${USERS_SERVICE_URI}/users/${userId}`, {})
       .json();
     if (!body) return null;
-    return <User>body.user;
+    return <User>body.message;
   }
+
+  // static async fetchUser({
+  //   accessToken,
+  // }: {
+  //   accessToken: string;
+  // }): Promise<User | null> {
+  //   const body: any = await got
+  //     .get(`${USERS_SERVICE_URI}/auth/currentuser`, {
+  //       headers: {
+  //         Cookie: `ACCESS_TOKEN=${accessToken};`,
+  //       },
+  //     })
+  //     .json();
+  //   if (!body) return null;
+  //   return <User>body.user;
+  // }
 
   static async fetchUserSession({
     accessToken,
@@ -79,7 +117,7 @@ export default class UsersService {
     //{withCredentials:true}
     // console.log("ttt", accessToken);
 
-    const body = await got
+    const body: any = await got
       .get(`${USERS_SERVICE_URI}/auth/currentuser/${accessToken}`)
       .json()
       .catch((err) => {
@@ -88,6 +126,11 @@ export default class UsersService {
         throw err;
       });
     if (!body) return null;
+    if (body.error) {
+      console.log(body.error);
+      return body.error;
+    }
+    // console.log(body);
 
     return <UserSession>body;
   }

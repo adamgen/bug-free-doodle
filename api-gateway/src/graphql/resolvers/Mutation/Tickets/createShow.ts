@@ -1,24 +1,21 @@
 import TicketsService from "#root/adapters/TicketsService";
 
-interface TicketsInit {
-  ticketAmount: number;
-  imdbApiId: string;
-}
-
 interface Args {
-  ticketsInit: TicketsInit;
+  ticketAmount: number;
   dateAndTIme: Date;
   price: number;
+  imdbApiId: string;
 }
 
 const createUserResolver = async (
   obj: any,
-  { dateAndTIme, price, ticketsInit }: Args
+  { ticketAmount, dateAndTIme, price, imdbApiId }: Args
 ) => {
   return await TicketsService.createShow({
-    ticketsInit,
+    ticketAmount,
     dateAndTIme,
     price,
+    imdbApiId,
   });
 };
 

@@ -2,12 +2,17 @@
 import express from "express";
 import usersController from "../controllers/user.controller";
 import usersValidator from "../middleware/validator/users.validator";
+import verifyMiddleware from "../middleware/verify.middleware";
 const router = express.Router();
 
-router.post("/users", usersValidator.createUser, usersController.addUser);
-router.get("/users", usersController.getUsers);
-router.get("/users/:userId", usersController.getUser);
-router.delete("/users/:userId", usersController.removeUser);
+//FIXME
+//init user without verify
+router.post("/", usersValidator.createUser, usersController.addUser);
+
+router.get("/", verifyMiddleware.verify, usersController.getUsers);
+router.get("/:userId", verifyMiddleware.verify, usersController.getUser);
+router.put("/:userId", usersController.updateUser);
+router.delete("/:userId", usersController.removeUser);
 // router.put("/users/:id", controller.updateUser);
 // router.delete("/users/:id", controller.deleteUser);
 
