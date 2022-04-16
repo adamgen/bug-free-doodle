@@ -5,6 +5,7 @@ import usersValidator from "../middleware/validator/users.validator";
 const router = express.Router();
 
 router.post("/", usersController.setTicket);
+router.put("/", usersController.cancelTicket);
 router.get("/", usersController.getTickets);
 router.get("/showid/:showId", usersController.getTicketsByShowId);
 router.get("/:id", usersController.getTicket);

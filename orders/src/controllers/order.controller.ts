@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { Order } from "../model/Order";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
+import { or } from "sequelize/types";
 const getOrders = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const orders = await Order.findAll({
@@ -39,7 +40,6 @@ const addOrder = async (req: Request, res: Response, next: NextFunction) => {
     const { userId, ticketId } = req.body;
     const resTicket: any = await axios.post(`http://localhost:7002/ticket`, {
       id: ticketId,
-      isTaken: true,
     });
 
     console.log(resTicket.data);
@@ -74,5 +74,47 @@ const addOrder = async (req: Request, res: Response, next: NextFunction) => {
   // return response
 };
 
-export default { getOrders, getOrder, addOrder };
+const removeOrder = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const order = await Order.findByPk(req.params.id);
+
+    if (order) {
+      const resTicket: any = await axios.put(`http://localhost:7002/ticket`, {
+        id: order.ticketId,
+      });
+
+      const { error, message } = resTicket.data;
+      if (error) {
+        await order.destroy().then(function () {
+          return res.status(200).json({
+            message: ["Order deleted.", message],
+          });
+        });
+      } else {
+        await order.destroy().then(function () {
+          return res.status(200).json({
+            message: ["Order deleted.", message],
+          });
+        });
+      }
+    } else {
+      console.log("tat");
+
+      return res.status(200).json({
+        error: true,
+        message: "Order not exists.",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(200).json({
+      error,
+    });
+    // throw error;
+  }
+
+  // return response
+};
+
+export default { getOrders, getOrder, addOrder, removeOrder };
 // export default { getOrders, getOrder, updateOrder, deleteOrder, addOrder };

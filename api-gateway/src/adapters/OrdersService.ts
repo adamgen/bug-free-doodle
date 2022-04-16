@@ -44,6 +44,20 @@ export default class OrdersService {
 
     return body.order;
   }
+
+  static async removeOrder({ id }: { id: string }) {
+    console.log(id);
+    const body: any = await got
+      .delete(`${ORDERS_SERVICE_URI}/order/${id}`)
+      .json();
+    console.log("Aa", body.message);
+    if (body.error) {
+      throw new Error(body.message);
+    }
+
+    return body.message;
+  }
+
   //   static async getOrder({
   //     orderId,
   //   }: {

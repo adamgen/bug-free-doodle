@@ -69,7 +69,7 @@ const setTicket = async (req: Request, res: Response, next: NextFunction) => {
   let message = "";
 
   try {
-    const { id, isTaken } = req.body;
+    const { id } = req.body;
     const result = await sequelize.transaction(async (t) => {
       const ticket: any = await Ticket.findByPk(id, {
         transaction: t,
@@ -106,7 +106,59 @@ const setTicket = async (req: Request, res: Response, next: NextFunction) => {
   // return response
 };
 
-export default { getTickets, getTicket, setTicket, getTicketsByShowId };
+const cancelTicket = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  let error = false;
+  let message = "";
+
+  try {
+    const { id } = req.body;
+    const result = await sequelize.transaction(async (t) => {
+      const ticket: any = await Ticket.findByPk(id, {
+        transaction: t,
+      });
+      if (!ticket) {
+        error = true;
+        message = "ticket not exist";
+      } else {
+        if (!ticket.isTaken) {
+          error = true;
+          message = "The ticket is already free";
+          return await ticket.save({ transaction: t });
+        } else {
+          ticket.isTaken = false;
+          error = false;
+          message = "The ticket is free";
+          return await ticket.save({ transaction: t });
+        }
+      }
+    });
+
+    return res.status(200).json({
+      error,
+      message,
+    });
+  } catch (error) {
+    console.log("e", error);
+    return res.status(200).json({
+      test: "t",
+    });
+    // throw error;
+  }
+
+  // return response
+};
+
+export default {
+  getTickets,
+  getTicket,
+  setTicket,
+  cancelTicket,
+  getTicketsByShowId,
+};
 // export default { getTickets, getTicket, updateTicket, deleteTicket, addTicket };
 
 // return res.status(200).json({

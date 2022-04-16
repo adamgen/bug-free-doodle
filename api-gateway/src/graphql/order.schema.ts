@@ -13,6 +13,7 @@ const schema = gql`
 
   type Mutation {
     createOrder(ticketId: String!): Order!
+    removeOrder(id: String!): [String!]!
   }
 
   type Query {
