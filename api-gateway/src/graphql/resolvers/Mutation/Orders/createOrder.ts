@@ -11,8 +11,8 @@ const createOrderResolver = async (
   { ticketId }: Args,
   context: any
 ) => {
-  if (context.userSession) {
-    const userId = context.userSession.user.id;
+  if (context.currentUser) {
+    const userId = context.currentUser.user.id;
     console.log("t", userId);
 
     return await OrdersService.createOrder({
@@ -35,7 +35,7 @@ export default createOrderResolver;
 //   expiresAt: Date;
 // }
 
-// const createUserResolver = async (
+// const signupResolver = async (
 //   obj: any,
 //   { userId, ticketId, status, expiresAt }: Args
 // ) => {
@@ -47,4 +47,4 @@ export default createOrderResolver;
 //   });
 // };
 
-// export default createUserResolver;
+// export default signupResolver;

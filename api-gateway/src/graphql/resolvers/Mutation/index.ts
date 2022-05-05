@@ -1,11 +1,12 @@
 //Auth service
-export { default as createUser } from "./Users/createUser";
+export { default as signup } from "./Users/signup";
 export { default as updateUser } from "./Users/updateUser";
 export { default as removeUser } from "./Users/removeUser";
-export { default as createUserSession } from "./Users/createUserSession";
-export { default as deleteUserSession } from "./Users/deleteUserSession";
+export { default as signin } from "./Users/signin";
+export { default as signout } from "./Users/signout";
 //TicketService
 export { default as createShow } from "./Tickets/createShow";
+export { default as removeShow } from "./Tickets/removeShow";
 // export { default as setTicket } from "./Tickets/setTicket";
 //Order service
 export { default as createOrder } from "./Orders/createOrder";

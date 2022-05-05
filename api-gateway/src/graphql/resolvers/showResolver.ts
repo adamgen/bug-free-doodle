@@ -1,32 +1,30 @@
 import TicketsService from "#root/adapters/TicketsService";
 import { ResolverContext } from "#root/graphql/types";
+
 interface Args {
-  ticketId: string;
-}
-
-import config from "config";
-import got from "got";
-
-const TICKETS_SERVICE_URI = <string>config.get("TICKETS_SERVICE_URI");
-
-export interface Ticket {
   id: string;
-  showId: string;
-  dateAndTIme: Date;
-  price: number;
 }
 
 const ticketResolver = {
-  ticket: async (args: Args) => {
-    let id: any = args.ticketId;
+  isSoldOut: async (args: Args) => {
+    const { id } = args;
     console.log("a", id);
-    const body: any = await got
-      .get(`${TICKETS_SERVICE_URI}/ticket/${id}`)
-      .json();
-    if (!body) return null;
 
-    console.log("b", body);
-    return <Ticket>body.ticket;
+    const tickets: any = await TicketsService.getTicketsByShowId({
+      showId: id,
+    });
+    let isSoldOut = true;
+    if (tickets) {
+      tickets.map((ticket: any) => {
+        console.log(ticket);
+
+        if (!ticket.isTaken) {
+          isSoldOut = false;
+        }
+      });
+    }
+
+    return isSoldOut;
   },
 };
 

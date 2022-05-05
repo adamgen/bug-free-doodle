@@ -4,13 +4,13 @@ import app from "../src/server";
 
 it("responds with details about the current user", async () => {
   // const cookie = await global.signin();
-  const { email, password } = generate.loginForm();
-  const register = await request(app).post("/auth/register").send({
+  const { email, password } = generate.signinForm();
+  const signup = await request(app).post("/auth/signup").send({
     email,
     password,
   });
 
-  const cookie = register.get("Set-Cookie");
+  const cookie = signup.get("Set-Cookie");
 
   const response = await request(app)
     .get("/auth/currentuser")

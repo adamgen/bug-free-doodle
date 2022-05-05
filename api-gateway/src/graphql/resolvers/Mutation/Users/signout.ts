@@ -5,20 +5,20 @@ interface Args {
   me: boolean;
 }
 
-const deleteUserSessionResolver = async (
+const signoutResolver = async (
   obj: any,
   args: Args,
   context: ResolverContext
 ) => {
   if (args.me !== true) throw new Error("Unsupported argument value");
 
-  const sessionId = context.res.locals.userSession.id;
+  const sessionId = context.res.locals.currentUser.id;
 
-  await UsersService.deleteUserSession({ sessionId });
+  await UsersService.signout({ sessionId });
 
-  context.res.clearCookie("userSessionId");
+  context.res.clearCookie("currentUserId");
 
   return true;
 };
 
-export default deleteUserSessionResolver;
+export default signoutResolver;

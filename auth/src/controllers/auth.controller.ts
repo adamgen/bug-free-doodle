@@ -10,7 +10,7 @@ interface UserPayload {
   email: string;
 }
 
-const register = async (req: Request, res: Response, next: NextFunction) => {
+const signup = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { email, password } = req.body;
     const id = uuidv4().toString();
@@ -39,7 +39,7 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const login = async (req: Request, res: Response, next: NextFunction) => {
+const signin = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { email, password } = req.body;
     const user: User | null = await User.findOne({ where: { email: email } });
@@ -68,19 +68,7 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const currentUser = async (req: any, res: Response, next: NextFunction) => {
-  try {
-    res.send({ user: req.user || null });
-  } catch (err: any) {
-    if (err.message.trim() === "invalid signature".trim()) {
-      return res.status(400).json({ message: "invalid signature" });
-    }
-    console.log("er", err);
-    return res.status(200).json({ message: "some problem" });
-  }
-};
-
-const logout = async (req: Request, res: Response, next: NextFunction) => {
+const signout = async (req: Request, res: Response, next: NextFunction) => {
   try {
     await console.log("a", req.cookies);
 
@@ -98,25 +86,30 @@ const validationToken = async (
 ) => {
   try {
     const user = await User.findByPk(req.params.userId);
-
-    //TODO validate email
-
-    // console.log(user);
-    // return res.status(200).json({
-    //   message: user,
-    // });
   } catch (error) {
     console.log(error);
     throw error;
   }
 };
 
+const currentUser = async (req: any, res: Response, next: NextFunction) => {
+  try {
+    res.send({ user: req.user || null });
+  } catch (err: any) {
+    if (err.message.trim() === "invalid signature".trim()) {
+      return res.status(400).json({ message: "invalid signature" });
+    }
+    console.log("er", err);
+    return res.status(200).json({ message: "some problem" });
+  }
+};
+
 export default {
-  login,
-  logout,
+  signin,
+  signout,
   currentUser,
   // currentToken,
-  register,
+  signup,
   validationToken,
 };
 

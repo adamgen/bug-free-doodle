@@ -17,7 +17,7 @@ export interface UserSession {
 }
 
 export default class UsersService {
-  static async createUser({
+  static async signup({
     password,
     email,
   }: {
@@ -26,7 +26,7 @@ export default class UsersService {
   }) {
     try {
       const { data }: any = await axios.post(
-        `${USERS_SERVICE_URI}/auth/register`,
+        `${USERS_SERVICE_URI}/auth/signup`,
         {
           password,
           email,
@@ -41,7 +41,7 @@ export default class UsersService {
     }
   }
 
-  static async createUserSession({
+  static async signin({
     password,
     email,
   }: {
@@ -49,14 +49,14 @@ export default class UsersService {
     email: string;
   }) {
     const { data }: any = <UserSession>(
-      await axios.post(`${USERS_SERVICE_URI}/auth/login`, { password, email })
+      await axios.post(`${USERS_SERVICE_URI}/auth/signin`, { password, email })
     );
     // console.log("Data", data);
 
     return <UserSession>data;
   }
 
-  static async deleteUserSession({ sessionId }: { sessionId: string }) {
+  static async signout({ sessionId }: { sessionId: string }) {
     const { data }: any = await axios.delete(
       `${USERS_SERVICE_URI}/sessions/${sessionId}`
     );

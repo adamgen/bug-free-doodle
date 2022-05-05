@@ -7,7 +7,7 @@ interface Args {
   imdbApiId: string;
 }
 
-const createUserResolver = async (
+const createShowResolver = async (
   obj: any,
   { ticketAmount, dateAndTIme, price, imdbApiId }: Args
 ) => {
@@ -19,4 +19,4 @@ const createUserResolver = async (
   });
 };
 
-export default createUserResolver;
+export default createShowResolver;

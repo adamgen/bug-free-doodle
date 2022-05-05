@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-export const logout = async (
+export const signout = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -17,4 +17,4 @@ export const logout = async (
   }
 };
 
-export default { logout };
+export default { signout };

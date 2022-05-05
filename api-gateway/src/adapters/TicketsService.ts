@@ -55,11 +55,13 @@ export default class TicketsService {
   }: {
     showId: string;
   }): Promise<Ticket | null> {
+    console.log("S", showId);
+
     const body: any = await got
       .get(`${TICKETS_SERVICE_URI}/ticket/showId/${showId}`)
       .json();
     if (!body) return null;
-    console.log(body.tickets);
+    // console.log(body.tickets);
 
     return <Ticket>body.tickets.rows;
   }
@@ -78,7 +80,7 @@ export default class TicketsService {
   static async getShows(): Promise<Ticket | null> {
     const body: any = await got.get(`${TICKETS_SERVICE_URI}/show`).json();
     if (!body) return null;
-    console.log(body.shows);
+    // console.log(body.shows);
 
     return <Ticket>body.shows;
   }
@@ -89,5 +91,15 @@ export default class TicketsService {
     console.log(body.show);
 
     return <Ticket>body.show;
+  }
+
+  static async removeShow({ id }: { id: string }): Promise<Ticket | null> {
+    const body: any = await got
+      .delete(`${TICKETS_SERVICE_URI}/show/${id}`)
+      .json();
+    if (!body) return null;
+    console.log(body.message);
+
+    return <Ticket>body.message;
   }
 }

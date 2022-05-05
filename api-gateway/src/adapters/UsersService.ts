@@ -21,7 +21,7 @@ export interface UserSession {
 }
 
 export default class UsersService {
-  static async createUser({
+  static async signup({
     password,
     email,
   }: {
@@ -29,7 +29,7 @@ export default class UsersService {
     email: string;
   }) {
     const body: any = await got
-      .post(`${USERS_SERVICE_URI}/auth/register`, { json: { password, email } })
+      .post(`${USERS_SERVICE_URI}/auth/signup`, { json: { password, email } })
       .json();
     console.log(body);
 
@@ -57,7 +57,7 @@ export default class UsersService {
     return body.user;
   }
 
-  static async createUserSession({
+  static async signin({
     password,
     email,
   }: {
@@ -65,14 +65,14 @@ export default class UsersService {
     email: string;
   }) {
     const body = <UserSession>await got
-      .post(`${USERS_SERVICE_URI}/auth/login`, {
+      .post(`${USERS_SERVICE_URI}/auth/signin`, {
         json: { password, email },
       })
       .json();
     return <UserSession>body;
   }
 
-  static async deleteUserSession({ sessionId }: { sessionId: string }) {
+  static async signout({ sessionId }: { sessionId: string }) {
     const body = await got
       .delete(`${USERS_SERVICE_URI}/sessions/${sessionId}`)
       .json();

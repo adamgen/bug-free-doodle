@@ -4,15 +4,15 @@ interface Args {
   me: boolean;
 }
 
-const userSessionResolver = async (
+const currentUserResolver = async (
   obj: any,
   args: Args,
   context: ResolverContext
 ) => {
   console.log(context.res.locals);
 
-  if (args.me !== true) throw new Error("Unsupported argument value");
-  return context.res.locals.userSession;
+  // if (args.me !== true) throw new Error("Unsupported argument value");
+  return context.res.locals.currentUser;
 };
 
-export default userSessionResolver;
+export default currentUserResolver;

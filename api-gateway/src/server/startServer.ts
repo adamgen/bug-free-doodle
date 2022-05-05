@@ -16,7 +16,7 @@ const startServer = async () => {
   const apolloServer = new ApolloServer({
     context: (ctx) => ({
       ...ctx,
-      userSession: ctx.res.locals.userSession,
+      currentUser: ctx.res.locals.currentUser,
     }),
     formatError: formatGraphQLErrors,
     resolvers,

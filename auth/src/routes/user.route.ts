@@ -7,7 +7,7 @@ const router = express.Router();
 
 //FIXME
 //init user without verify
-router.post("/", usersValidator.createUser, usersController.addUser);
+router.post("/", usersValidator.signup, usersController.addUser);
 
 router.get("/", verifyMiddleware.verify, usersController.getUsers);
 router.get("/:userId", verifyMiddleware.verify, usersController.getUser);

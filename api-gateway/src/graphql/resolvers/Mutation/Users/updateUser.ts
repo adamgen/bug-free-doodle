@@ -11,7 +11,7 @@ const updateUserResolver = async (
   { password, email, isAdmin }: Args,
   context: any
 ) => {
-  const userId = context.userSession.user.id;
+  const userId = context.currentUser.user.id;
   return await UsersService.updateUser({ userId, password, email, isAdmin });
 };
 

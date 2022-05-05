@@ -69,7 +69,7 @@ function token(user) {
   return getUserToken(buildUser(user));
 }
 
-function loginForm(overrides) {
+function signinForm(overrides) {
   return {
     email: getEmail(),
     password: getPassword(),
@@ -103,7 +103,7 @@ export {
   buildListItem,
   buildBook,
   token,
-  loginForm,
+  signinForm,
   getPassword as password,
   getEmail as email,
   getId as id,

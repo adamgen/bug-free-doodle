@@ -5,11 +5,11 @@ interface Args {
   isTaken: boolean;
 }
 
-const createUserResolver = async (obj: any, { id, isTaken }: Args) => {
+const signupResolver = async (obj: any, { id, isTaken }: Args) => {
   return await TicketService.setTicket({
     id,
     isTaken,
   });
 };
 
-export default createUserResolver;
+export default signupResolver;

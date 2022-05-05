@@ -3,18 +3,18 @@ import request from "supertest";
 import app from "../src/server";
 
 it("returns a 200 on successful signup", async () => {
-  const { email, password } = generate.loginForm();
+  const { email, password } = generate.signinForm();
   return await request(app)
-    .post("/auth/register")
+    .post("/auth/signup")
     .send({ email, password })
     .expect(200);
 });
 
 it("returns a 400 with an invalid email", async () => {
-  const { password } = generate.loginForm();
+  const { password } = generate.signinForm();
   const expectedResult = "Email must be valid";
   const res = await request(app)
-    .post("/auth/register")
+    .post("/auth/signup")
     .send({
       email: "alskdflaskjfd",
       password,
@@ -23,9 +23,9 @@ it("returns a 400 with an invalid email", async () => {
 });
 
 it("returns a 400 with an invalid password", async () => {
-  const { email, password } = generate.loginForm();
+  const { email, password } = generate.signinForm();
   return request(app)
-    .post("/auth/register")
+    .post("/auth/signup")
     .send({
       email,
       password: "p",
@@ -34,16 +34,16 @@ it("returns a 400 with an invalid password", async () => {
 });
 
 it("returns a 400 with missing email and password", async () => {
-  const { email, password } = generate.loginForm();
+  const { email, password } = generate.signinForm();
   await request(app)
-    .post("/auth/register")
+    .post("/auth/signup")
     .send({
       email,
     })
     .expect(400);
 
   await request(app)
-    .post("/auth/register")
+    .post("/auth/signup")
     .send({
       password,
     })
@@ -51,9 +51,9 @@ it("returns a 400 with missing email and password", async () => {
 });
 
 it("disallows duplicate emails", async () => {
-  const { email, password } = generate.loginForm();
+  const { email, password } = generate.signinForm();
   await request(app)
-    .post("/auth/register")
+    .post("/auth/signup")
     .send({
       email,
       password,
@@ -61,7 +61,7 @@ it("disallows duplicate emails", async () => {
     .expect(200);
 
   await request(app)
-    .post("/auth/register")
+    .post("/auth/signup")
     .send({
       email,
       password,
@@ -70,9 +70,9 @@ it("disallows duplicate emails", async () => {
 });
 
 it("sets a cookie after successful signup", async () => {
-  const { email, password } = generate.loginForm();
+  const { email, password } = generate.signinForm();
   const response = await request(app)
-    .post("/auth/register")
+    .post("/auth/signup")
     .send({
       email,
       password,

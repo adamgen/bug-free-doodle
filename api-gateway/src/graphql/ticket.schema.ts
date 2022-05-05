@@ -16,6 +16,7 @@ const schema = gql`
     price: Int!
     imdbApiId: String!
     ticketAmount: Int!
+    isSoldOut: Boolean
   }
 
   type Mutation {
@@ -32,6 +33,7 @@ const schema = gql`
       imdbApiId: String!
       ticketAmount: Int!
     ): Show!
+    removeShow(id: ID!): String!
   }
 
   type Query {
@@ -39,8 +41,6 @@ const schema = gql`
     Show(id: ID!): Show
     Tickets(showId: ID!): [Ticket!]!
     Ticket(id: ID!): Ticket
-    getAvailableTicket(showId: ID!): Int!
-    isSoldOut(showId: ID!): Boolean!
   }
 `;
 
@@ -61,3 +61,4 @@ export default schema;
 //    availableTickets: Int!
 //   ticketsLeft: Int!
 //  }
+// isSoldOut(showId: ID!): Boolean!

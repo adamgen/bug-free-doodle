@@ -18,6 +18,7 @@ const schema = gql`
 
   type Query {
     orders: [Order!]!
+    order(id: ID!): Order!
   }
 `;
 

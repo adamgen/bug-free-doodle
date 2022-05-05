@@ -11,7 +11,7 @@ const removeUserResolver = async (
   { password, email, isAdmin }: Args,
   context: any
 ) => {
-  const userId = context.userSession.user.id;
+  const userId = context.currentUser.user.id;
   // console.log(userId);
 
   return await UsersService.removeUser({ userId });

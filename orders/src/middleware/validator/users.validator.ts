@@ -2,7 +2,7 @@ import { check, body, validationResult } from "express-validator";
 import { Request, Response, NextFunction } from "express";
 import { User } from "../../model/Ticket";
 
-const createUser = [
+const signup = [
   body("email").isEmail().withMessage("Email must be valid"),
   body("password")
     .trim()
@@ -33,7 +33,7 @@ const createUser = [
   },
 ];
 
-const loginUser = [
+const signinUser = [
   body("email").isEmail().withMessage("Email must be valid"),
   body("password")
     .trim()
@@ -62,7 +62,7 @@ const loginUser = [
   },
 ];
 
-export default { createUser, loginUser };
+export default { signup, signinUser };
 
 // ^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[0-9A-Za-z.\s_-]+$ allow at least one uppercase letter, one lowercase letter and one numbers and underline
 // ^(?=.*[A-Z])[A-Za-z.\s_-]+$ lower case uppercase and underline

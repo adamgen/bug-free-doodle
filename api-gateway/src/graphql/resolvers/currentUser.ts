@@ -2,10 +2,10 @@
 // import { UserSessionType } from "#root/graphql/types";
 
 // const UserSession = {
-//   user: async (userSession: UserSessionType) => {
-//     // console.log("ttt", userSession.user.accessToken);
+//   user: async (currentUser: UserSessionType) => {
+//     // console.log("ttt", currentUser.user.accessToken);
 //     return await UsersService.fetchUser({
-//       accessToken: userSession.user.accessToken,
+//       accessToken: currentUser.user.accessToken,
 //     });
 //   },
 // };

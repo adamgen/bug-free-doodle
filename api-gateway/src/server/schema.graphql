@@ -10,11 +10,11 @@ type UserSession {
 }
 
 type Mutation {
-  createUser(email: String!, password: String!): User!
-  createUserSession(email: String!, password: String!): UserSession!
-  deleteUserSession(me: Boolean!): Boolean!
+  signup(email: String!, password: String!): User!
+  signin(email: String!, password: String!): UserSession!
+  signout(me: Boolean!): Boolean!
 }
 
 type Query {
-  userSession(me: Boolean!): UserSession
+  currentUser(me: Boolean!): UserSession
 }

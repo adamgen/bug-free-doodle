@@ -31,16 +31,16 @@ beforeAll(async () => {
 // import { resetDb } from "utils/db-utils";
 // beforeEach(() => resetDb());
 describe("Auth Flow", () => {
-  const { email, password } = generate.loginForm();
-  test("register", async () => {
+  const { email, password } = generate.signinForm();
+  test("signup", async () => {
     console.log(email, password);
-    // register
-    const rData = await api.post("auth/register", { email, password });
+    // signup
+    const rData = await api.post("auth/signup", { email, password });
     expect(rData.status).toBe(200);
   });
-  test("login", async () => {
-    // login
-    const lData = await api.post("auth/login", { email, password });
+  test("signin", async () => {
+    // signin
+    const lData = await api.post("auth/signin", { email, password });
     expect(lData.status).toBe(200);
 
     //TODO authenticated request
@@ -58,11 +58,11 @@ describe("Auth Flow", () => {
 });
 
 test("email must be unique", async () => {
-  const { email, password } = generate.loginForm();
-  const rData = await api.post("auth/register", { email, password });
+  const { email, password } = generate.signinForm();
+  const rData = await api.post("auth/signup", { email, password });
 
   const error = await api
-    .post("auth/register", { email, password })
+    .post("auth/signup", { email, password })
     .catch((e) => e.response);
   expect(error.status).toBe(400);
   expect(error.data).toMatchSnapshot(`{message:'email taken'}`);
@@ -70,7 +70,7 @@ test("email must be unique", async () => {
   // expect(error.status).toBe(400);
 
   //   const error = await api
-  //     .post("auth/register", { email, password: "Nancy-is-#1" })
+  //     .post("auth/signup", { email, password: "Nancy-is-#1" })
   //     .catch(resolve);
   //   expect(error).toMatchInlineSnapshot(
   //     `[Error: 400: {"message":"email taken"}]`
@@ -84,43 +84,43 @@ test("email must be unique", async () => {
 //   );
 // });
 
-test("email required to register", async () => {
+test("email required to signup", async () => {
   const error = await api
-    .post("auth/register", { password: generate.password() })
+    .post("auth/signup", { password: generate.password() })
     .catch((e) => e.response);
   expect(error.status).toBe(400);
   expect(error.data).toMatchSnapshot(`{message: "email can't be blank"}`);
 });
 
-test("password required to register", async () => {
+test("password required to signup", async () => {
   const error = await api
-    .post("auth/register", { email: generate.email() })
+    .post("auth/signup", { email: generate.email() })
     .catch((e) => e.response);
   expect(error.status).toBe(400);
   expect(error.data).toMatchSnapshot(`{message:"password can't be blank"}`);
 });
 
-// test("email required to login", async () => {
+// test("email required to signin", async () => {
 //   const error = await api
-//     .post("auth/login", { password: generate.password() })
+//     .post("auth/signin", { password: generate.password() })
 //     .catch(resolve);
 //   expect(error).toMatchInlineSnapshot(
 //     `[Error: 400: {"message":"email can't be blank"}]`
 //   );
 // });
 
-// test("password required to login", async () => {
+// test("password required to signin", async () => {
 //   const error = await api
-//     .post("auth/login", { email: generate.email() })
+//     .post("auth/signin", { email: generate.email() })
 //     .catch(resolve);
 //   expect(error).toMatchInlineSnapshot(
 //     `[Error: 400: {"message":"password can't be blank"}]`
 //   );
 // });
 
-// test("user must exist to login", async () => {
+// test("user must exist to signin", async () => {
 //   const error = await api
-//     .post("auth/login", generate.loginForm({ email: "__will_never_exist__" }))
+//     .post("auth/signin", generate.signinForm({ email: "__will_never_exist__" }))
 //     .catch(resolve);
 //   expect(error).toMatchInlineSnapshot(
 //     `[Error: 400: {"message":"email or password is invalid"}]`

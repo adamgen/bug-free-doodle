@@ -14,7 +14,7 @@ const getOrdersByIdResolver = async (
   context: any
 ) => {
   return await OrdersService.getOrdersByid({
-    userId: context.userSession.user.id,
+    userId: context.currentUser.user.id,
   });
 };
 

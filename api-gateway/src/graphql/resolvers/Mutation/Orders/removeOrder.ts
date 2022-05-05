@@ -24,7 +24,7 @@ export default removeOrderResolver;
 //   expiresAt: Date;
 // }
 
-// const createUserResolver = async (
+// const signupResolver = async (
 //   obj: any,
 //   { userId, ticketId, status, expiresAt }: Args
 // ) => {
@@ -36,4 +36,4 @@ export default removeOrderResolver;
 //   });
 // };
 
-// export default createUserResolver;
+// export default signupResolver;

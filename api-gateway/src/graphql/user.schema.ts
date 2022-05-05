@@ -14,15 +14,15 @@ const schema = gql`
   }
 
   type Mutation {
-    createUser(email: String!, password: String!): User!
+    signup(email: String!, password: String!): User!
+    signin(email: String!, password: String!): UserSession!
+    signout: Boolean!
     updateUser(email: String!, password: String, isAdmin: Boolean!): User!
     removeUser: String!
-    createUserSession(email: String!, password: String!): UserSession!
-    deleteUserSession(me: Boolean!): Boolean!
   }
 
   type Query {
-    userSession(me: Boolean!): UserSession
+    currentUser: UserSession
   }
 `;
 
